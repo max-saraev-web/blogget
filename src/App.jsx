@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Button from "./components/Button";
+import { Header } from "./components/Header/Header";
+import { Main } from "./components/Main/Main";
 
 function App({techName}) {
   const[counterr, setCounterr] = useState(1);
@@ -11,11 +13,10 @@ function App({techName}) {
   }
 
   return (
-    <header className="App-header">
-    <Button text={'Тык!'}/>
-    <button onClick={logged}>Кнопка</button>
-      <p>Hello {techName}</p>
-    </header>
+    <>
+      <Header/>
+      <Main/>
+    </>
   )
 }
 
