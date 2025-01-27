@@ -1,5 +1,4 @@
 import globals from "globals";
-import path from "node:path";
 import js from "@eslint/js";
 import eslintPluginReact from "eslint-plugin-react";
 import babelParser from "@babel/eslint-parser";
@@ -10,9 +9,14 @@ export default [
         plugins: {
         react: eslintPluginReact,
         },
+        settings: {
+            react: {
+            version: "detect", // Автоматически определяет версию React
+            },
+},
     },
     {
-        ignores: ['node_modules', 'dist'],
+        ignores: ['node_modules', 'dist', '.hygen'],
     },
     js.configs.recommended,
     {
@@ -26,16 +30,16 @@ export default [
         parserOptions: {
                 ecmaVersion: "latest",
             sourceType: "module",
-            requireConfigFile: false, // Не требует Babel-конфигурацию, если она не нужна
+            requireConfigFile: false, 
             babelOptions: {
-            presets: ["@babel/preset-react"], // Убедись, что установлен @babel/preset-react
+            presets: ["@babel/preset-react"],
             },
         },
     },
     },
     {
         files: ['**/*.{js,jsx}'],
-                rules: {
+        rules: {
         "react/react-in-jsx-scope": "off",
         "no-console": "off",
         "no-loop-func": ["error"],
@@ -108,9 +112,14 @@ export default [
         "no-with": "error",
         "prefer-promise-reject-errors": "error",
 
-        "no-unused-vars": ["error", {
-            args: "none",
-        }],
+        "no-unused-vars": [
+    "warn",
+    {
+        vars: "all",
+        args: "after-used",
+        ignoreRestSiblings: true,
+    },
+    ],
 
         "array-bracket-newline": "off",
         "array-bracket-spacing": ["error", "never"],

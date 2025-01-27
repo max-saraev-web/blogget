@@ -5,5 +5,5 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App techName={"точно не Vue.js"}/>
+  <App techName={'точно не Vue.js'}/>
 );

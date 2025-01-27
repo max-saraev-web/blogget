@@ -6,4 +6,4 @@ export const Button = ({text}) => {
     console.log('жмяк жмяк');
   }
   return <button onClick={logged} className={style.btn}>{text}</button>;
-}
+};
