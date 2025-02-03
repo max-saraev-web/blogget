@@ -4,6 +4,7 @@ import PostImage from './PostImage';
 import PostContent from './PostContent/index';
 import PostRating from './PostRating/index';
 import PostTime from './PostTime/index';
+import PropTypes from 'prop-types';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date, img} = postData;
@@ -17,4 +18,8 @@ export const Post = ({postData}) => {
       <DeleteBtn/>
     </li>
   );
+};
+
+Post.PropTypes = {
+  postData: PropTypes.object,
 };

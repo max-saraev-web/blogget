@@ -1,4 +1,5 @@
 import style from './PostContent.module.css';
+import PropTypes from 'prop-types';
 
 export const PostContent = ({title, author}) => {
   console.log(style);
@@ -10,4 +11,9 @@ export const PostContent = ({title, author}) => {
       <a className={style.linkAuthor} href="#author">{author}</a>
     </div>
   );
+};
+
+PostContent.PropTypes = {
+  title: PropTypes.string,
+  author: PropTypes.string,
 };
