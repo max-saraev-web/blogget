@@ -7,11 +7,10 @@ import PostTime from './PostTime/index';
 import PropTypes from 'prop-types';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date, img} = postData;
-
+  const {title, author, ups, date, thumbnail} = postData;
   return (
     <li className={style.post}>
-      <PostImage src={img} alt={title}/>
+      <PostImage src={thumbnail} alt={title}/>
       <PostContent title={title} author={author}/>
       <PostRating ups={ups}/>
       <PostTime date={date}/>
@@ -20,6 +19,6 @@ export const Post = ({postData}) => {
   );
 };
 
-Post.PropTypes = {
+Post.propTypes = {
   postData: PropTypes.object,
 };

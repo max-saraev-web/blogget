@@ -40,6 +40,8 @@ export default [
     {
         files: ['**/*.{js,jsx}'],
         rules: {
+        ...js.configs.recommended.rules,
+        ...eslintPluginReact.configs.recommended.rules,
         "react/react-in-jsx-scope": "off",
         "no-console": "off",
         "no-loop-func": ["error"],
@@ -113,7 +115,7 @@ export default [
         "prefer-promise-reject-errors": "error",
 
         "no-unused-vars": [
-    "warn",
+    "error",
     {
         vars: "all",
         args: "after-used",

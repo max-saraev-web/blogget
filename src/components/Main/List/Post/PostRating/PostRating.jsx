@@ -12,6 +12,6 @@ export const PostRating = ({ups}) => {
   );
 };
 
-PostRating.PropTypes = {
+PostRating.propTypes = {
   ups: PropTypes.string,
 };

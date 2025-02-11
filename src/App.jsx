@@ -1,14 +1,11 @@
-import {Header} from './components/Header/Header';
-import {Main} from './components/Main/Main';
+import Header from './components/Header';
+import Main from './components/Main/index';
 
-function App({techName}) {
-  console.log('Пропсы в APP', techName);
-  return (
-    <>
-      <Header/>
-      <Main/>
-    </>
-  );
-}
+const App = () => (
+  <>
+    <Header/>
+    <Main/>
+  </>
+);
 
 export default App;
