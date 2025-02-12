@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.medium {
+  font-weight: medium;
+}
+
 .black {
   color: var(--black);
 }

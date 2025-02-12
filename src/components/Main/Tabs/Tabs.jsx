@@ -3,6 +3,7 @@ import style from './Tabs.module.css';
 import {useEffect, useState} from 'react';
 import {assignId} from '../../../utility/generateId';
 import SVG from '../../Mixins/SVG/index';
+import {Text} from '../../../UI/Text/index';
 
 import arrowPic from './img/arrow.svg';
 import topPic from './img/top.svg';
@@ -10,6 +11,7 @@ import homePic from './img/home.svg';
 import hotPic from './img/hot.svg';
 import bestPic from './img/best.svg';
 import debounceRaf from '../../../utility/debounceRaf';
+
 
 const LIST = [
   {value: 'Главная', icon: homePic},
@@ -21,6 +23,7 @@ const LIST = [
 export const Tabs = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isDropDown, setIsDropDown] = useState(false);
+  const [selectedTab, setSelectedTab] = useState('Открыть меню');
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -44,7 +47,8 @@ export const Tabs = () => {
     <div className={style.container}>
       {isDropDown && (<div className={style.wrapperBtn}>
         <button className={style.btn} onClick={() =>
-          setIsDropDownOpen(trigger => !trigger)}>Открыть меню
+          setIsDropDownOpen(trigger => !trigger)}>
+          {selectedTab}
           <SVG
             width={15}
             height={15}
@@ -60,17 +64,18 @@ export const Tabs = () => {
             <li
               className={style.item}
               key={tabElem.id}>
-              <button
+              <Text
+                As='button'
                 className={style.btn}
                 onClick={() => {
-                  console.log(tabElem.value);
+                  setSelectedTab(tabElem.value);
                 }}>
                 {tabElem.value}
                 {tabElem.icon && <SVG
                   width={40}
                   height={40}
                   path={tabElem.icon}/>}
-              </button>
+              </Text>
             </li>
           ))}
         </ul>

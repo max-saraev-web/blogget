@@ -13,11 +13,13 @@ export const Text = prop => {
     children,
     href,
     center,
+    fweight,
   } = prop;
 
   const classes = classNames(
     className,
     style[color],
+    style[fweight],
     {[style.center]: center},
     {[style[`fs${size}`]]: size},
     {[style[`fst${tsize}`]]: tsize},
@@ -41,5 +43,6 @@ Text.propTypes = {
   className: PropTypes.string,
   href: PropTypes.string,
   children: PropTypes.node,
+  fweight: PropTypes.string,
 };
 
