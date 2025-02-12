@@ -1,33 +1,58 @@
 import PropTypes from 'prop-types';
 import style from './Tabs.module.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {assignId} from '../../../utility/generateId';
 import SVG from '../../Mixins/SVG/index';
+
 import arrowPic from './img/arrow.svg';
+import topPic from './img/top.svg';
+import homePic from './img/home.svg';
+import hotPic from './img/hot.svg';
+import bestPic from './img/best.svg';
+import debounceRaf from '../../../utility/debounceRaf';
 
 const LIST = [
-  {value: 'Главная'},
-  {value: 'Просмотренные'},
-  {value: 'Сохранённые'},
-  {value: 'Мои посты'},
+  {value: 'Главная', icon: homePic},
+  {value: 'Топ', icon: topPic},
+  {value: 'Лучшие', icon: bestPic},
+  {value: 'Горячие', icon: hotPic},
 ].map(assignId);
 
 export const Tabs = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [isDropDown, setIsDropDown] = useState(false);
+
+  const handleResize = () => {
+    if (document.documentElement.clientWidth < 768) {
+      setIsDropDown(true);
+    } else {
+      setIsDropDown(false);
+    }
+  };
+
+
+  useEffect(() => {
+    const resizeRaf = debounceRaf(handleResize);
+    handleResize();
+    window.addEventListener('resize', resizeRaf);
+    return () => {
+      window.removeEventListener('resize', resizeRaf);
+    };
+  }, []);
 
   return (
     <div className={style.container}>
-      <div className={style.wrapperBtn}>
+      {isDropDown && (<div className={style.wrapperBtn}>
         <button className={style.btn} onClick={() =>
           setIsDropDownOpen(trigger => !trigger)}>Открыть меню
           <SVG
-            // width={20}
-            // height={20}
+            width={15}
+            height={15}
             path={arrowPic}/>
         </button>
-      </div>
+      </div>)}
 
-      {isDropDownOpen && (
+      {(isDropDownOpen || !isDropDown) && (
         <ul
           onClick={() => setIsDropDownOpen(false)}
           className={style.list}>
@@ -41,6 +66,10 @@ export const Tabs = () => {
                   console.log(tabElem.value);
                 }}>
                 {tabElem.value}
+                {tabElem.icon && <SVG
+                  width={40}
+                  height={40}
+                  path={tabElem.icon}/>}
               </button>
             </li>
           ))}
