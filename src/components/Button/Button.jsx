@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import style from './Button.module.css';
 
 export const Button = ({text}) => {
@@ -5,4 +6,8 @@ export const Button = ({text}) => {
     console.log('жмяк жмяк');
   };
   return <button onClick={logged} className={style.btn}>{text}</button>;
+};
+
+Button.propTypes = {
+  text: PropTypes.string,
 };

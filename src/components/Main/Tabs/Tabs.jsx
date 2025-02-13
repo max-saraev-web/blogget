@@ -62,14 +62,12 @@ export const Tabs = () => {
           className={style.list}>
           {LIST.map(tabElem => (
             <li
+              onClick={() => setSelectedTab(tabElem.value)}
               className={style.item}
               key={tabElem.id}>
               <Text
                 As='button'
-                className={style.btn}
-                onClick={() => {
-                  setSelectedTab(tabElem.value);
-                }}>
+                className={style.btn}>
                 {tabElem.value}
                 {tabElem.icon && <SVG
                   width={40}
