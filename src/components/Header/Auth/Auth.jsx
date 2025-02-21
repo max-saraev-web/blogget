@@ -8,16 +8,22 @@ import {URL_API} from '../../../api/const';
 
 import loginPic from './img/login.svg';
 
-export const Auth = ({token}) => {
+export const Auth = ({token, delToken}) => {
   const [auth, setAuth] = useState({});
+  const [logout, setLogout] = useState(false);
+
   useEffect(() => {
     if (!token) return;
+
 
     fetch(`${URL_API}/api/v1/me`, {
       headers: {
         Authorization: `bearer ${token}`
       },
-    }).then(rsp => rsp.json())
+    }).then(rsp => {
+      if (rsp.status === 401) return;
+      return rsp.json();
+    })
       .then(({name, icon_img: iconImg}) => {
         const img = iconImg.replace(/\?.*$/, '');
         setAuth({name, img});
@@ -29,15 +35,31 @@ export const Auth = ({token}) => {
   }, [token]
   );
 
+  const logoutSwitch = () => setLogout(current => !current);
+
+  const handleLogout = () => {
+    setAuth({});
+    delToken();
+    window.location.href = 'http://localhost:3000';
+  };
+
   return (
     <div className={style.container}>
       {auth.name ?
       (
-        <button className={style.btn}>
+        <button
+          onClick={logoutSwitch}
+          className={style.btn}>
           <img
             className={style.img}
             src={auth.img} title={auth.name} alt={` Аватар ${auth.name}`}/>
-          <Text>{auth.name}</Text>
+          {logout &&
+          <a
+            role='button'
+            onClick={handleLogout}
+            className={style.logout}>
+          Выйти
+          </a>}
         </button>
       ) :
       (<Text
@@ -54,4 +76,5 @@ export const Auth = ({token}) => {
 
 Auth.propTypes = {
   token: PropTypes.string,
+  delToken: PropTypes.func,
 };

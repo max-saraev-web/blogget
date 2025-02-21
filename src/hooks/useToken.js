@@ -12,15 +12,20 @@ const useToken = (state) => {
     if (localStorage.getItem('bearer')) {
       setToken(localStorage.getItem('bearer'));
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (token) {
       localStorage.setItem('bearer', token);
+    } else {
+      localStorage.removeItem('bearer');
     }
   }, [token]
   );
-  return [token];
+
+  const delToken = () => setToken(prev => (prev ? '' : null));
+
+  return [token, delToken];
 };
 
 export default useToken;
