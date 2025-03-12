@@ -1,41 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import style from './Auth.module.css';
 import SVG from '../../Mixins/SVG/index';
-import PropTypes from 'prop-types';
 import {Text} from '../../../UI/Text';
 import {urlAuth} from '../../../api/auth';
-import {URL_API} from '../../../api/const';
-
 import loginPic from './img/login.svg';
-
-export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState({});
-  const [logout, setLogout] = useState(false);
-
-  useEffect(() => {
-    if (!token) return;
+import {tokenContext} from '../../../context/tokenContext';
+import {authContext} from '../../../context/authContext';
 
 
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`
-      },
-    }).then(rsp => {
-      if (rsp.status === 401) return;
-      return rsp.json();
-    })
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      })
-      .catch(err => {
-        console.error(err);
-        setAuth({});
-      });
-  }, [token]
-  );
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
+  const {auth, setAuth} = useContext(authContext);
+  const [showLogout, setShowLogout] = useState(false);
 
-  const logoutSwitch = () => setLogout(current => !current);
+
+  const logoutSwitch = () => setShowLogout(current => !current);
 
   const handleLogout = () => {
     setAuth({});
@@ -53,13 +32,13 @@ export const Auth = ({token, delToken}) => {
           <img
             className={style.img}
             src={auth.img} title={auth.name} alt={` Аватар ${auth.name}`}/>
-          {logout &&
-          <a
+          {showLogout &&
+          <div
             role='button'
             onClick={handleLogout}
             className={style.logout}>
           Выйти
-          </a>}
+          </div>}
         </button>
       ) :
       (<Text
@@ -74,7 +53,3 @@ export const Auth = ({token, delToken}) => {
   );
 };
 
-Auth.propTypes = {
-  token: PropTypes.string,
-  delToken: PropTypes.func,
-};

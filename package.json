@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "component": "hygen create component",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "linter-fix": "eslint . --fix"
   },
   "eslintConfig": {
     "extends": [
