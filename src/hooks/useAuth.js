@@ -29,7 +29,7 @@ const useAuth = () => {
         setAuth({});
         delToken();
       });
-  }
+  }, [token]
   );
   return [auth, setAuth];
 };

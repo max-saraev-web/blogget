@@ -7,7 +7,6 @@ const useToken = (state) => {
     if (window.location.pathname.includes('/auth')) {
       const token = new URLSearchParams(window.location.hash.substring(1))
         .get('access_token');
-      console.log('токен пришёл', token);
       setToken(token);
     }
     if (localStorage.getItem('bearer')) {

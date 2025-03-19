@@ -7,12 +7,24 @@ import PostTime from './PostTime/index';
 import PropTypes from 'prop-types';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, created, thumbnail, url} = postData;
+  const {
+    title,
+    author,
+    ups,
+    created,
+    thumbnail,
+    url,
+    selfText: markdown,
+    id,
+    subreddit,
+  } = postData;
 
   return (
     <li className={style.post}>
       <PostImage src={thumbnail} alt={title}/>
-      <PostContent title={title} author={author} url={url}/>
+      <PostContent
+        subreddit={subreddit}
+        id={id} title={title} author={author} url={url} markdown={markdown}/>
       <PostRating ups={ups}/>
       <PostTime date={created}/>
       <DeleteBtn/>
