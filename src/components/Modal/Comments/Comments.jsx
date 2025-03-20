@@ -7,13 +7,14 @@ export const Comments = ({comments}) => {
   return (
     <div className={style.container}>
       <ul className={style.list}>
-        {b.map(post =>
-          <li className={style.item} key={post.id}>
-            <h3 className={style.author}>{post.author}</h3>
-            <p className={style.comment}>{post.body}</p>
-            <span>{formatDate(post.created)}</span>
-          </li>
-        )}
+        {b.filter(item => item.created !== undefined)
+          .map(post =>
+            <li className={style.item} key={post.id}>
+              <h3 className={style.author}>{post.author}</h3>
+              <p className={style.comment}>{post.body}</p>
+              <span>{formatDate(post.created)}</span>
+            </li>
+          )}
       </ul>
     </div>
   );
