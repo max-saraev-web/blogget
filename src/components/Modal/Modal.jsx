@@ -51,6 +51,7 @@ export const Modal = ({id, close}) => {
             {isComment ? <FormComment/> :
               <button onClick={handleComment}
                 className={style.btn}>Написать комментарий</button>}
+
             <Comments comments={comments}/>
 
             {post?.selftext ? <p className={style.content}>{post.selftext}</p> :

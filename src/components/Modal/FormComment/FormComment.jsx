@@ -1,10 +1,13 @@
 import style from './FormComment.module.css';
 import {Text} from '../../../UI/Text/Text';
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {authContext} from '../../../context/authContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateComment} from '../../../store';
 
 export const FormComment = () => {
-  const [areaValue, setAreaValue] = useState('');
+  const value = useSelector(state => state.comment);
+  const dispatch = useDispatch();
   const {auth} = useContext(authContext);
   const textAreaRef = useRef(null);
 
@@ -15,11 +18,11 @@ export const FormComment = () => {
 
   const handleSubmit = ev => {
     ev.preventDefault();
-    console.log('Данные из textArea', areaValue);
-    setAreaValue('');
+    console.log('Данные из textArea', value);
+    dispatch(updateComment(''));
   };
 
-  const handleChange = ev => setAreaValue(ev.target.value);
+  const handleChange = ev => dispatch(updateComment(ev.target.value));
 
   return (
     <form onSubmit={handleSubmit} className={style.form}>
@@ -30,7 +33,7 @@ export const FormComment = () => {
       >{auth.name}</Text>
       <textarea
         onChange={handleChange}
-        value={areaValue} ref={textAreaRef} className={style.textarea}/>
+        value={value} ref={textAreaRef} className={style.textarea}/>
       <button role='submit' className={style.btn}>Отправить</button>
     </form>
   );
