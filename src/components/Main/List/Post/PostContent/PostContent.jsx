@@ -4,7 +4,7 @@ import {Text} from '../../../../../UI/Text';
 import {useState} from 'react';
 import {Modal} from '../../../../Modal/Modal';
 
-export const PostContent = ({title, author, url, id, subreddit}) => {
+export const PostContent = ({title, author, id, subreddit}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -43,7 +43,6 @@ export const PostContent = ({title, author, url, id, subreddit}) => {
 PostContent.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
-  url: PropTypes.string,
   markdown: PropTypes.string,
   id: PropTypes.string,
   subreddit: PropTypes.string,

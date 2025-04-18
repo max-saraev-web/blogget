@@ -11,7 +11,7 @@ export const Modal = ({id, close}) => {
   const overlayRef = useRef(null);
   const btnRef = useRef(null);
   const comments = useCommentsData(id);
-  const [post, commentaries] = comments;
+  const [post] = comments;
   const [isComment, setIsComment] = useState(false);
 
   const handleClick = ev => {

@@ -4,21 +4,25 @@ import SVG from '../../Mixins/SVG/index';
 import {Text} from '../../../UI/Text';
 import {urlAuth} from '../../../api/auth';
 import loginPic from './img/login.svg';
-import {tokenContext} from '../../../context/tokenContext';
 import {authContext} from '../../../context/authContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {delToken} from '../../../store';
 
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
+  const dispatch = useDispatch();
   const {auth, setAuth} = useContext(authContext);
   const [showLogout, setShowLogout] = useState(false);
+  const tokennn = useSelector(state => state.token);
 
 
   const logoutSwitch = () => setShowLogout(current => !current);
 
   const handleLogout = () => {
     setAuth({});
-    delToken();
+    console.log('state до', tokennn);
+    dispatch(delToken());
+    // console.log('state после', useSelector(state => state.token));
     window.location.href = 'http://localhost:3000';
   };
 

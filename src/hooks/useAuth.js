@@ -1,9 +1,11 @@
-import {useContext, useEffect, useState} from 'react';
-import {tokenContext} from '../context/tokenContext';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
+import {useDispatch, useSelector} from 'react-redux';
+import {delToken} from '../store';
 
 const useAuth = () => {
-  const {token, delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
+  const dispatch = useDispatch();
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const useAuth = () => {
       },
     }).then(rsp => {
       if (rsp.status === 401) {
-        delToken();
+        dispatch(delToken);
         return;
       };
       return rsp.json();
@@ -27,7 +29,7 @@ const useAuth = () => {
       .catch(err => {
         console.error(err);
         setAuth({});
-        delToken();
+        dispatch(delToken);
       });
   }, [token]
   );

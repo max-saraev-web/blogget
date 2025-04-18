@@ -1,10 +1,10 @@
-import {useContext, useEffect, useState} from 'react';
-import {tokenContext} from '../context/tokenContext';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
+import {useSelector} from 'react-redux';
 
 const useCommentsData = (id) => {
   // const [comments, setComments] = useState({});
-  const {token} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
   const [post, setPosts] = useState([]);
 
   // useEffect(() => {
