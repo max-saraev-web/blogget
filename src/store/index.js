@@ -27,17 +27,17 @@ export const updateToken = token => ({
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_COMMENT':
+    case UPDATE_COMMENT:
       return {
         ...state,
         comment: action.comment,
       };
-    case 'DEL_TOKEN':
+    case DEL_TOKEN:
       return {
         ...state,
         token: '',
       };
-    case 'UPDATE_TOKEN':
+    case UPDATE_TOKEN:
       return {
         ...state,
         token: action.token,
