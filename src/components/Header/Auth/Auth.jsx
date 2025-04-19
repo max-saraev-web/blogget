@@ -7,6 +7,7 @@ import loginPic from './img/login.svg';
 import {authContext} from '../../../context/authContext';
 import {useDispatch, useSelector} from 'react-redux';
 import {delToken} from '../../../store';
+import {setToken} from '../../../api/token';
 
 
 export const Auth = () => {
@@ -20,8 +21,8 @@ export const Auth = () => {
 
   const handleLogout = () => {
     setAuth({});
-    console.log('state до', tokennn);
     dispatch(delToken());
+    setToken('');
     // console.log('state после', useSelector(state => state.token));
     window.location.href = 'http://localhost:3000';
   };
