@@ -1,26 +1,26 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import style from './Auth.module.css';
 import SVG from '../../Mixins/SVG/index';
 import {Text} from '../../../UI/Text';
 import {urlAuth} from '../../../api/auth';
 import loginPic from './img/login.svg';
-import {authContext} from '../../../context/authContext';
-import {useDispatch, useSelector} from 'react-redux';
-import {delToken} from '../../../store';
+import {useDispatch} from 'react-redux';
+import {delToken} from '../../../store/token/action';
 import {setToken} from '../../../api/token';
+import useAuth from '../../../hooks/useAuth';
+import AuthLoader from './AuthLoader';
 
 
 export const Auth = () => {
   const dispatch = useDispatch();
-  const {auth, setAuth} = useContext(authContext);
+  // const auth = useSelector(state => state.auth.data);
+  const [auth, loading] = useAuth();
   const [showLogout, setShowLogout] = useState(false);
-  const tokennn = useSelector(state => state.token);
-
 
   const logoutSwitch = () => setShowLogout(current => !current);
 
   const handleLogout = () => {
-    setAuth({});
+    // setAuth({});
     dispatch(delToken());
     setToken('');
     // console.log('state после', useSelector(state => state.token));
@@ -29,7 +29,9 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ?
+      {loading ? (
+          <AuthLoader/>
+        ) : auth.name ?
       (
         <button
           onClick={logoutSwitch}

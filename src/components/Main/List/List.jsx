@@ -1,8 +1,7 @@
-import {useContext} from 'react';
-// import {assignId} from '../../../utility/generateId';
+import usePosts from '../../../hooks/usePosts';
 import style from './List.module.css';
+import ListLoader from './ListLoader';
 import Post from './Post';
-import {postsContext} from '../../../context/postsContext';
 export const List = () => {
   // const postsData = [
   //   {
@@ -62,11 +61,12 @@ export const List = () => {
   //     date: '2022-08-17T13:10:00.000Z',
   //   },
   // ].map(assignId);
-  const {posts} = useContext(postsContext);
+  const [posts, loading] = usePosts();
+  console.log('loading: ', loading);
 
   return (
     <ul className={style.list}>
-      {posts.length &&
+      {loading ? <ListLoader/> :
         posts.map(({data}) => <Post key={data.id} postData={data}/>)}
     </ul>
   );

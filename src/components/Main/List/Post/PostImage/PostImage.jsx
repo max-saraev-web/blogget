@@ -3,7 +3,9 @@ import nophoto from '../img/notphoto.jpg';
 import PropTypes from 'prop-types';
 
 export const PostImage = ({src, alt}) => {
+  // const tailCleaner = str => str.replace(/\.jpeg.*/, '.jpeg');
   const regex = /.*\.png/;
+  const tailCleaner = str => str.replace(/\?.*$/, '');
 
   return (
     <img className={style.img} src={
@@ -11,7 +13,7 @@ export const PostImage = ({src, alt}) => {
     src === 'spoiler' ||
     src === 'default' ||
     src === 'self' ?
-  nophoto : src} alt={alt} />
+  nophoto : tailCleaner(src)} alt={alt} />
   );
 };
 

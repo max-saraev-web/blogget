@@ -1,0 +1,43 @@
+import {
+  AUTH_LOGOUT,
+  AUTH_REQUEST,
+  AUTH_REQUEST_ERROR,
+  AUTH_REQUEST_SUCCESS} from './action';
+
+const initialState = {
+  loading: false,
+  data: {},
+  err: '',
+};
+
+export const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case AUTH_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        err: '',
+      };
+    case AUTH_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.data,
+        err: '',
+      };
+    case AUTH_REQUEST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        data: {},
+        err: action.err,
+      };
+    case AUTH_LOGOUT:
+      return {
+        ...state,
+        data: {}
+      };
+    default:
+      return state;
+  }
+};

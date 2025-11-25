@@ -1,14 +1,13 @@
 import style from './FormComment.module.css';
 import {Text} from '../../../UI/Text/Text';
-import {useContext, useEffect, useRef} from 'react';
-import {authContext} from '../../../context/authContext';
+import {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateComment} from '../../../store';
+import {updateComment} from '../../../store/comment/action';
 
 export const FormComment = () => {
-  const value = useSelector(state => state.comment);
+  const value = useSelector(state => state.comment.comment);
   const dispatch = useDispatch();
-  const {auth} = useContext(authContext);
+  const {name: userName} = useSelector(state => state.auth.data);
   const textAreaRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export const FormComment = () => {
         As='h3'
         size={14}
         tsize={18}
-      >{auth.name}</Text>
+      >{userName}</Text>
       <textarea
         onChange={handleChange}
         value={value} ref={textAreaRef} className={style.textarea}/>

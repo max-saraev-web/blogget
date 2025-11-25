@@ -7,11 +7,11 @@ import useCommentsData from '../../hooks/useCommentsData';
 import Comments from './Comments';
 import FormComment from './FormComment/index';
 
-export const Modal = ({id, close}) => {
+export const Modal = ({id, close, subreddit}) => {
   const overlayRef = useRef(null);
   const btnRef = useRef(null);
-  const comments = useCommentsData(id);
-  const [post] = comments;
+  // const {post, comments} = useCommentsData(id);
+  const {post, comments, status} = useCommentsData(id, subreddit);
   const [isComment, setIsComment] = useState(false);
 
   const handleClick = ev => {
@@ -45,6 +45,9 @@ export const Modal = ({id, close}) => {
             {post?.title ? <h2 className={style.title}>{post.title}</h2> :
             <h2 className={style.title}>Заголовок отсутствует</h2>}
 
+            {post?.selftext ? <p className={style.content}>{post.selftext}</p> :
+              <div className={style.content}>Текст отсутствует</div>}
+
             {post?.author ? <p className={style.author}>{post.author}</p> :
               <p className={style.author}>Автор отсутствует</p>}
 
@@ -53,9 +56,6 @@ export const Modal = ({id, close}) => {
                 className={style.btn}>Написать комментарий</button>}
 
             <Comments comments={comments}/>
-
-            {post?.selftext ? <p className={style.content}>{post.selftext}</p> :
-              <div className={style.content}>Текст отсутствует</div>}
 
             <button ref={btnRef} className={style.close}>
               <CloseIcon/>

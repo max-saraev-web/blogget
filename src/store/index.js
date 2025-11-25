@@ -1,51 +1,23 @@
-import {createStore} from 'redux';
-import {getToken} from '../api/token';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {thunk} from 'redux-thunk';
+import {commentReducer} from './comment/commentReducer';
+import {tokenMiddleware} from './token/action';
+import {composeWithDevTools} from '@redux-devtools/extension';
+import {authReducer} from './auth/authReducer';
+import {tokenReducer} from './token/tokenReducer';
+import {postsReducer} from './posts/postReducer';
+import {selectedPostReducer} from './selectedPost/selectedPostReducer';
 
-const initialState = {
-  token: getToken(),
-  comment: 'Введите ваш комментарий',
-};
-
-const UPDATE_COMMENT = 'UPDATE_COMMENT';
-
-const DEL_TOKEN = 'DEL_TOKEN';
-
-const UPDATE_TOKEN = 'UPDATE_TOKEN';
-
-export const updateComment = comment => ({
-  type: UPDATE_COMMENT,
-  comment,
-});
-
-export const delToken = () => ({type: DEL_TOKEN});
-
-export const updateToken = token => ({
-  type: UPDATE_TOKEN,
-  token,
+const rootReducer = combineReducers({
+  token: tokenReducer,
+  comment: commentReducer,
+  auth: authReducer,
+  posts: postsReducer,
+  selectedPost: selectedPostReducer,
 });
 
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case UPDATE_COMMENT:
-      return {
-        ...state,
-        comment: action.comment,
-      };
-    case DEL_TOKEN:
-      return {
-        ...state,
-        token: '',
-      };
-    case UPDATE_TOKEN:
-      return {
-        ...state,
-        token: action.token,
-      };
-    default:
-      return state;
-  }
-};
-
-
-export const store = createStore(reducer);
+export const store = createStore(rootReducer,
+  composeWithDevTools(
+    applyMiddleware(tokenMiddleware, thunk)
+  ));
