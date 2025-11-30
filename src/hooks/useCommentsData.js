@@ -3,14 +3,14 @@ import {useSelector} from 'react-redux';
 import {URL_API} from '../api/const';
 
 
-const useCommentsData = id => {
+const useCommentsData = (subreddit, id) => {
   const selectedPost = useSelector(state => state.selectedPost);
   const token = useSelector(state => state.token);
   // const [comments, setComments] = useState({});
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${URL_API}/r/${id}/comments/${subreddit}`, {
+    fetch(`${URL_API}/r/${subreddit}/comments/${id}`, {
       headers: {
         Authorization: `bearer ${token}`
       },
@@ -19,6 +19,7 @@ const useCommentsData = id => {
       return rsp.json();
     }).then(rsp => {
       // setComments(rsp);
+      console.log('rsp', rsp);
     })
       .catch(err => {
         console.error(err);

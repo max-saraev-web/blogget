@@ -11,7 +11,9 @@ export const Modal = ({id, close, subreddit}) => {
   const overlayRef = useRef(null);
   const btnRef = useRef(null);
   // const {post, comments} = useCommentsData(id);
-  const {post, comments, status} = useCommentsData(id, subreddit);
+  console.log('Вызываю модалку - id', id);
+  console.log('Вызываю модалку - subreddit', subreddit);
+  const {post, comments} = useCommentsData(subreddit, id);
   const [isComment, setIsComment] = useState(false);
 
   const handleClick = ev => {

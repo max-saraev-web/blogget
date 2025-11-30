@@ -3,6 +3,8 @@ import {URL_API} from '../../api/const';
 
 export const SELECTED_POST_REQUEST = 'SELECTED_POST_REQUEST';
 
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
+
 export const SELECTED_POST_REQUEST_SUCCESS = 'SELECTED_POST_REQUEST_SUCCESS';
 
 export const SELECTED_POST_REQUEST_ERROR = 'SELECTED_POST_REQUEST_ERROR';
@@ -13,10 +15,10 @@ export const commentsRequest = () => ({
   type: SELECTED_POST_REQUEST,
 });
 
-// export const updateComments = obj => ({
-//   type: UPDATE_COMMENTS,
-//   obj,
-// });
+export const updateComments = obj => ({
+  type: UPDATE_COMMENTS,
+  obj,
+});
 
 export const commentsRequestAsync = id => (dispatch, getState) => {
   const {token} = getState().token;

@@ -2,12 +2,15 @@ import {
   POSTS_REQUEST,
   POSTS_REQUEST_DELETE,
   POSTS_REQUEST_ERROR,
-  POSTS_REQUEST_SUCCESS} from './action';
+  POSTS_REQUEST_SUCCESS,
+  POSTS_REQUEST_SUCCESS_AFTER} from './action';
 
 const initialState = {
   loadingPosts: false,
   posts: [],
   err: '',
+  after: '',
+  isLast: false,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -22,8 +25,19 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingPosts: false,
-        posts: action.posts,
+        posts: action.children,
         err: '',
+        after: action.after,
+        isLast: !action.after,
+      };
+    case POSTS_REQUEST_SUCCESS_AFTER:
+      return {
+        ...state,
+        loadingPosts: false,
+        posts: [...state.posts, ...action.children],
+        err: '',
+        after: action.after,
+        isLast: !action.after,
       };
     case POSTS_REQUEST_ERROR:
       return {

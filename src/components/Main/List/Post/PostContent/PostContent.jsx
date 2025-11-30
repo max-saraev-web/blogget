@@ -45,4 +45,5 @@ PostContent.propTypes = {
   author: PropTypes.string,
   markdown: PropTypes.string,
   id: PropTypes.string,
+  subreddit: PropTypes.string,
 };

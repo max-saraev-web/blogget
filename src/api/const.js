@@ -6,3 +6,4 @@ export const RANDOM_STRING = 'random_string';
 export const REDIRECT_URI = 'http://localhost:3000/auth';
 export const SCOPE = 'identity submit read';
 export const URL_BEST = 'https://www.reddit.com/dev/api/#GET_best';
+export const URL_COMMENTS = 'https://www.reddit.com';
