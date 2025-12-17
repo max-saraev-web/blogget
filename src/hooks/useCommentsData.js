@@ -3,14 +3,15 @@ import {useSelector} from 'react-redux';
 import {URL_API} from '../api/const';
 
 
-const useCommentsData = (subreddit, id) => {
+const useCommentsData = (subreddit, id, title) => {
   const selectedPost = useSelector(state => state.selectedPost);
   const token = useSelector(state => state.token);
   // const [comments, setComments] = useState({});
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${URL_API}/r/${subreddit}/comments/${id}`, {
+    // /r/Pikabu/comments/1pnwvvm/чулочки/
+    fetch(`${URL_API}/r/${subreddit}/comments/${id}/${title}.json`, {
       headers: {
         Authorization: `bearer ${token}`
       },

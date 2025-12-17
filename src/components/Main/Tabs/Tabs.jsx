@@ -11,19 +11,24 @@ import homePic from './img/home.svg';
 import hotPic from './img/hot.svg';
 import bestPic from './img/best.svg';
 import debounceRaf from '../../../utility/debounceRaf';
+import {useDispatch} from 'react-redux';
+import {postRequestAsync} from '../../../store/posts/action';
 
 
 const LIST = [
-  {value: 'Главная', icon: homePic},
-  {value: 'Топ', icon: topPic},
-  {value: 'Лучшие', icon: bestPic},
-  {value: 'Горячие', icon: hotPic},
+  {value: 'Главная', icon: homePic, category: 'new'},
+  {value: 'Топ', icon: topPic, category: 'top'},
+  {value: 'Лучшие', icon: bestPic, category: 'best'},
+  {value: 'Горячие', icon: hotPic, category: 'hot'},
 ].map(assignId);
 
 export const Tabs = () => {
+  const dispatch = useDispatch();
+
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedTab, setSelectedTab] = useState('Открыть меню');
+  const [category, setCategory] = useState('new');
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -33,6 +38,10 @@ export const Tabs = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch(postRequestAsync(category));
+  }, [category]
+  );
 
   useEffect(() => {
     const resizeRaf = debounceRaf(handleResize);
@@ -66,7 +75,10 @@ export const Tabs = () => {
               key={tabElem.id}>
               <Text
                 As='button'
-                onClick={() => setSelectedTab(tabElem.value)}
+                onClick={() => {
+                  setSelectedTab(tabElem.value);
+                  setCategory(tabElem.category);
+                }}
                 className={style.btn}>
                 {tabElem.value}
                 {tabElem.icon && <SVG

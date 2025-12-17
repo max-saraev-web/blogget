@@ -1,4 +1,6 @@
 import {
+  POSTS_CATEGORY_ACTIVE,
+  POSTS_INCREASE_COUNTER,
   POSTS_REQUEST,
   POSTS_REQUEST_DELETE,
   POSTS_REQUEST_ERROR,
@@ -11,6 +13,8 @@ const initialState = {
   err: '',
   after: '',
   isLast: false,
+  category: '',
+  pageCount: 0,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -52,6 +56,19 @@ export const postsReducer = (state = initialState, action) => {
         loadingPosts: false,
         posts: [],
         err: '',
+      };
+    case POSTS_CATEGORY_ACTIVE:
+      return {
+        ...state,
+        category: action.category,
+        isLast: '',
+        after: '',
+        pageCount: 0,
+      };
+    case POSTS_INCREASE_COUNTER:
+      return {
+        ...state,
+        pageCount: state.pageCount + 1,
       };
     default:
       return state;

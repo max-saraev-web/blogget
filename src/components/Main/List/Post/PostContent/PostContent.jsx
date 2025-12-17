@@ -33,6 +33,7 @@ export const PostContent = ({title, author, id, subreddit}) => {
         <Modal
           subreddit={subreddit}
           id={id}
+          title={title}
           close={() => setIsModalOpen(false)}
         />}
     </div>

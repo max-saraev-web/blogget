@@ -7,13 +7,15 @@ import useCommentsData from '../../hooks/useCommentsData';
 import Comments from './Comments';
 import FormComment from './FormComment/index';
 
-export const Modal = ({id, close, subreddit}) => {
+export const Modal = ({id, close, subreddit, title}) => {
   const overlayRef = useRef(null);
   const btnRef = useRef(null);
   // const {post, comments} = useCommentsData(id);
   console.log('Вызываю модалку - id', id);
   console.log('Вызываю модалку - subreddit', subreddit);
-  const {post, comments} = useCommentsData(subreddit, id);
+  console.log('title: ', title);
+
+  const {post, comments} = useCommentsData(subreddit, id, title);
   const [isComment, setIsComment] = useState(false);
 
   const handleClick = ev => {

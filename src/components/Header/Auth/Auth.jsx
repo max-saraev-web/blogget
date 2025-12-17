@@ -9,9 +9,12 @@ import {delToken} from '../../../store/token/action';
 import {setToken} from '../../../api/token';
 import useAuth from '../../../hooks/useAuth';
 import AuthLoader from './AuthLoader';
+import {useNavigate} from 'react-router';
+import {authLogout} from '../../../store/auth/action';
 
 
 export const Auth = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   // const auth = useSelector(state => state.auth.data);
   const [auth, loading] = useAuth();
@@ -23,8 +26,10 @@ export const Auth = () => {
     // setAuth({});
     dispatch(delToken());
     setToken('');
+    dispatch(authLogout());
+    navigate('/');
     // console.log('state после', useSelector(state => state.token));
-    window.location.href = 'http://localhost:3000';
+    // window.location.href = 'http://localhost:3000';
   };
 
   return (

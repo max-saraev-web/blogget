@@ -1,8 +1,11 @@
 import {useDispatch} from 'react-redux';
 import Header from './components/Header';
-import Main from './components/Main/index';
 import {updateToken} from './store/token/action';
 import {getToken} from './api/token';
+import {Layout} from './components/Layout/Layout';
+import styleMain from './components/Main/Main.module.css';
+import {Outlet} from 'react-router';
+import Tabs from './components/Main/Tabs/index';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -11,7 +14,12 @@ const App = () => {
   return (
     <>
       <Header/>
-      <Main/>
+      <main className={styleMain.main}>
+        <Layout>
+          <Tabs/>
+          <Outlet/>
+        </Layout>
+      </main>
     </>
   );
 };
