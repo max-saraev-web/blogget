@@ -2,9 +2,9 @@ import {useEffect, useRef} from 'react';
 import style from './List.module.css';
 import ListLoader from './ListLoader';
 import Post from './Post';
-import {postRequestAsync} from '../../../store/posts/action';
 import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../Button/index';
+import {postsThunk} from '../../../store/posts/postsThunk';
 
 export const List = () => {
   const loadingAuth = useSelector(state => state.auth.data);
@@ -14,13 +14,16 @@ export const List = () => {
   const posts = useSelector(state => state.posts.posts);
   const loading = useSelector(state => state.posts.loadingPosts);
   const pageCounter = useSelector(state => state.posts.pageCount);
+  const isLast = useSelector(state => state.posts.isLast);
+  console.log('pageCounter: ', pageCounter);
 
   useEffect(() => {
     const lastObserver = new IntersectionObserver((watched) => {
-      if (watched[0].isIntersecting) {
-        dispatch(postRequestAsync());
+      if (watched[0].isIntersecting && (!loading && !isLast)) {
+        console.log('Загрузке', loading);
+        dispatch(postsThunk());
       }
-      if (pageCounter > 2) {
+      if (pageCounter >= 2) {
         lastObserver.disconnect();
         console.log('два раза');
       };
@@ -33,20 +36,21 @@ export const List = () => {
     return () => {
       lastObserver.disconnect();
     };
-  });
+  }, [loading, isLast, dispatch]);
 
 
   return (
     <>
       <ul className={style.list}>
-        {loading || Object.keys(loadingAuth).length === 0 ? <ListLoader/> :
+        {(loading && pageCounter === 0) ||
+          Object.keys(loadingAuth).length === 0 ? <ListLoader/> :
         posts.map(({data}) => <Post key={data.id} postData={data}/>)}
         <li ref={endList} className={style.last}/>
       </ul>
-      {pageCounter > 2 ?
+      {pageCounter >= 2 ?
         <Button
           text="Загрузить ещё"
-          onClick={() => dispatch(postRequestAsync())}
+          onClick={() => dispatch(postsThunk())}
         /> : ''
       }
     </>

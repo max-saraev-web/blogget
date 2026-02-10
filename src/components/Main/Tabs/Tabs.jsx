@@ -12,7 +12,7 @@ import hotPic from './img/hot.svg';
 import bestPic from './img/best.svg';
 import debounceRaf from '../../../utility/debounceRaf';
 import {useDispatch} from 'react-redux';
-import {postRequestAsync} from '../../../store/posts/action';
+import {postsThunk} from '../../../store/posts/postsThunk';
 
 
 const LIST = [
@@ -39,7 +39,7 @@ export const Tabs = () => {
   };
 
   useEffect(() => {
-    dispatch(postRequestAsync(category));
+    dispatch(postsThunk(category));
   }, [category]
   );
 

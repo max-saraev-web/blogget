@@ -49,36 +49,36 @@ export const postsIncreaseCount = () => ({
 });
 
 
-export const postRequestAsync = newCategory => (dispatch, getStore) => {
-  let category = getStore().posts.category;
-  if (newCategory) {
-    category = newCategory;
-    dispatch(postsActiveCategory(category));
-  }
-  const {token} = getStore().token;
-  const after = getStore().posts.after;
-  const loading = getStore().posts.loadingPosts;
-  const isLast = getStore().posts.isLast;
+// export const postRequestAsync = newCategory => (dispatch, getStore) => {
+//   let category = getStore().posts.category;
+//   if (newCategory) {
+//     category = newCategory;
+//     dispatch(postsActiveCategory(category));
+//   }
+//   const {token} = getStore().token;
+//   const after = getStore().posts.after;
+//   const loading = getStore().posts.loadingPosts;
+//   const isLast = getStore().posts.isLast;
 
-  if (!after) dispatch(postRequest());
+//   if (!after) dispatch(postRequest());
 
-  if (!token || loading || isLast) return;
-  axios(`${URL_API}/${category}?limit=10
-    ${after ? `&after=${after}` : ''}`, {
-    headers: {
-      Authorization: `bearer ${token}`
-    },
-  }).then(rsp => {
-    dispatch(postsIncreaseCount());
-    if (!after) {
-      dispatch(postsRequestSuccess(rsp.data.data));
-      console.log(rsp.data.data);
-    } else {
-      dispatch(postsRequestSuccessAfter(rsp.data.data));
-    }
-    return rsp;
-  }).catch(err => {
-    dispatch(postRequestError(err));
-    console.error(err);
-  });
-};
+//   if (!token || loading || isLast) return;
+//   axios(`${URL_API}/${category}?limit=10
+//     ${after ? `&after=${after}` : ''}`, {
+//     headers: {
+//       Authorization: `bearer ${token}`
+//     },
+//   }).then(rsp => {
+//     dispatch(postsIncreaseCount());
+//     if (!after) {
+//       dispatch(postsRequestSuccess(rsp.data.data));
+//       console.log(rsp.data.data);
+//     } else {
+//       dispatch(postsRequestSuccessAfter(rsp.data.data));
+//     }
+//     return rsp;
+//   }).catch(err => {
+//     dispatch(postRequestError(err));
+//     console.error(err);
+//   });
+// };
